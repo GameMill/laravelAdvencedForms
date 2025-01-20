@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\catagory;
 use CBSoftwareDev\Form\Form;
+use CBSoftwareDev\Form\Input\Select;
 use CBSoftwareDev\Form\Input\TextInput;
 use CBSoftwareDev\Form\Input\Textarea;
 use Illuminate\Http\Request;
@@ -25,15 +26,16 @@ class Project_Catagories extends Controller
      */
     public function create()
     {
-
         return view("form", ["form" => $this->getFormCreate()]);
     }
 
     private function getFormCreate(?catagory $catagoryModel = null): Form {
+
         return Form::make([
-            TextInput::make('name'),
-            Textarea::make('description'),
-        ], $catagoryModel)->columns(1);
+            TextInput::make('name')->required()->length(3, 255),
+            Textarea::make('description')->length(0, 500),
+            Select::make('parent_id')->options(catagory::all(["id","name"])->pluck("name","id")),
+        ])->columns(1);
     }
 
     /**
@@ -56,7 +58,7 @@ class Project_Catagories extends Controller
             'description' => $data['description'],
         ]);*/
 
-        return redirect("/categories");
+        //return redirect("/categories");
     }
 
     /**
@@ -82,9 +84,10 @@ class Project_Catagories extends Controller
     public function update(Request $request, catagory $catagory)
     {
         $form = $this->getFormCreate($catagory);
-        if(!$form->Validate(true)) {
-            return view("form", data: ["form" => $form]);
-        }
+        $form->trySave();
+        //if(!$form->Validate(true)) {
+        //    return view("form", data: ["form" => $form]);
+        //}
         return redirect("/categories");
 
     }

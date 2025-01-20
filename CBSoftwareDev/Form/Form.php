@@ -5,8 +5,48 @@ use CBSoftwareDev\Form\Style\Group;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request;
 
-class Form implements \Stringable {
+trait BaseInputGetRules {
+    public function getRules(&$rules = []): array
+    {
+        foreach ($this->schema as $input) {
+            if($input instanceof Group) {
+                $input->getRules($rules);
+            } else {
+                $rules[$input->getName()] = $input->getRules();
+            }
+        }
+        return $rules;
+    }
+}
 
+
+trait BaseInputUseLength {
+    protected int $minLength = 0;
+    protected int $maxLength = 0;
+
+    public function length(int $min=0, int $max=0): static
+    {
+        $this->minLength = $min;
+        $this->maxLength = $max;
+        return $this;
+    }
+
+    protected function GetLengthAttribute(): string
+    {
+        $length = [];
+        if($this->minLength > 0) {
+            $length[] = "minlength=\"{$this->minLength}\"";
+        }
+        if($this->maxLength > 0) {
+            $length[] = "maxlength=\"{$this->maxLength}\"";
+        }
+        return implode(" ",$length);
+    }
+}
+
+class Form implements \Stringable {
+    use BaseInputGetRules;
+    
     public int $columns = 2;
     
 
@@ -34,7 +74,7 @@ class Form implements \Stringable {
 
     public function Validate(): array
     {
-       return app("request")->validate(rules: $this->getRules());
+       return app("request")->validate($this->getRules());
 
     }
 
@@ -48,21 +88,15 @@ class Form implements \Stringable {
         return $this;
     }
 
-    public function getRules(): array
-    {
-        $rules = [];
-        foreach ($this->schema as $input) {
-            $rules[$input->getName()] = $input->getRules();
-        }
-        return $rules;
-    }
+
 
     public function trySave(): void {
         $data = $this->Validate();
-
-        if($this->model) {
-            $this->model->update($data);
+        clock($data,"data");
+        if(clock($this->model,"model")) {
+            clock($this->model->update($data),"did it update?");
         } else {
+            $this->model = $this->model->create($data);
             //$this->model = new $$ModelName();
             //$this->model = $this->model->create($data);
         }

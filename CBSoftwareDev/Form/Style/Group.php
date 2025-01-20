@@ -2,9 +2,11 @@
 
 namespace CBSoftwareDev\Form\Style;
 
+use CBSoftwareDev\Form\BaseInputGetRules;
 use CBSoftwareDev\Form\Form;
 
 class Group implements \Stringable {
+    use BaseInputGetRules;
 
     public static function make(int $columns, array $inputs): static
     {
