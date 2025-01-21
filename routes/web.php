@@ -10,6 +10,12 @@ Route::get('/', function () {
 
 Route::get('/test', [TestForm::class,"index"]);
 
+
+Route::get('/testimage', [TestForm::class,"testimage"]);
+Route::post('/testimage', [TestForm::class,"createimage"]);
+Route::get('/testimage/{image}', [TestForm::class,"getimage"]);
+
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -23,6 +29,10 @@ Route::middleware([
 
 });
 
+Route::get('generate1251safasfasf2571625982517625621865795', function (){
+    \Illuminate\Support\Facades\Artisan::call('storage:link');
+    echo 'ok';
+});
 
 function MakeRoute(string $name,string $class)
 {
