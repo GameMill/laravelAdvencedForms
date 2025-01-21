@@ -31,8 +31,8 @@ class TestForm extends Controller
                 TextInput::make('slug'),
                 TextInput::make('image'),
                 Select::make('parent_id')->options(options: catagory::all(columns: ["id","name"])->pluck("name","id")),
-
             ]),
+            Select::make('parent_id')->options(options: catagory::all(columns: ["id","name"])->pluck("name","id")),
         ])->columns(3);
     }
     /**
