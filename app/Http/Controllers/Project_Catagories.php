@@ -34,8 +34,8 @@ class Project_Catagories extends Controller
         return Form::make([
             TextInput::make('name')->required()->length(3, 255),
             Textarea::make('description')->length(0, 500),
-            Select::make('parent_id')->options(catagory::all(["id","name"])->pluck("name","id")),
-        ])->columns(1);
+            Select::make(name: 'parent_id')->options(options: catagory::all(columns: ["id","name"])->pluck("name","id")),
+        ],$catagoryModel)->setModelClass(catagory::class)->columns(1);
     }
 
     /**
@@ -44,9 +44,9 @@ class Project_Catagories extends Controller
     public function store(Request $request)
     {
         $form = $this->getFormCreate();
-        if(!$form->Validate(true)) {
-            return view("form", data: ["form" => $form]);
-        }
+        $form->trySave();
+        return redirect("/categories");
+
 /*
         $data = request()->validate([
             'name' => 'required',

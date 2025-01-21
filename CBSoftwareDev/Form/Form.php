@@ -48,6 +48,7 @@ class Form implements \Stringable {
     use BaseInputGetRules;
     
     public int $columns = 2;
+    protected string $modelClass = "";
     
 
     public static function make(array $schema, ?Model $model = null): static
@@ -55,8 +56,14 @@ class Form implements \Stringable {
         return new static($schema, $model);
     }
 
-    public function __construct(private array $schema,private ?Model $model = null) {
+    public function __construct(private array $schema,private ?Model $model) {
         
+    }
+
+    public function setModelClass(string $modelClass): static
+    {
+        $this->modelClass = $modelClass;
+        return $this;
     }
 
     public function getRawValue(string $name) {
@@ -93,10 +100,10 @@ class Form implements \Stringable {
     public function trySave(): void {
         $data = $this->Validate();
         clock($data,"data");
-        if(clock($this->model,"model")) {
+        if($this->model) {
             clock($this->model->update($data),"did it update?");
         } else {
-            $this->model = $this->model->create($data);
+            $this->model = $this->modelClass::create($data);
             //$this->model = new $$ModelName();
             //$this->model = $this->model->create($data);
         }

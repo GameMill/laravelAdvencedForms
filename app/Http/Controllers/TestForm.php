@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\catagory;
 use CBSoftwareDev\Form\Form;
+use CBSoftwareDev\Form\Input\Select;
 use CBSoftwareDev\Form\Input\TextInput;
 use CBSoftwareDev\Form\Style\Group;
 use Illuminate\Http\Request;
@@ -29,6 +30,8 @@ class TestForm extends Controller
                 TextInput::make('rating'),
                 TextInput::make('slug'),
                 TextInput::make('image'),
+                Select::make('parent_id')->options(options: catagory::all(columns: ["id","name"])->pluck("name","id")),
+
             ]),
         ])->columns(3);
     }
