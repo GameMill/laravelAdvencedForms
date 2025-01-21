@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\catagory;
 use CBSoftwareDev\Form\Form;
+use CBSoftwareDev\Form\Input\Image;
+use CBSoftwareDev\Form\Input\Image2;
 use CBSoftwareDev\Form\Input\Select;
 use CBSoftwareDev\Form\Input\TextInput;
 use CBSoftwareDev\Form\Style\Group;
@@ -29,7 +31,8 @@ class TestForm extends Controller
                 TextInput::make('highlight'),
                 TextInput::make('rating'),
                 TextInput::make('slug'),
-                TextInput::make('image'),
+                Image::make('image'),
+                Image2::make('image'),
                 Select::make('parent_id')->options(options: catagory::all(columns: ["id","name"])->pluck("name","id")),
             ]),
             Select::make('parent_id')->options(options: catagory::all(columns: ["id","name"])->pluck("name","id")),
