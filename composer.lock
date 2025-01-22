@@ -1188,7 +1188,7 @@
             "extra": {
                 "laravel": {
                     "aliases": {
-                        "Clockwork": "Clockwork\\Support\\Laravel\\Facade"
+                        "Clockwork": "Clockwork\\Support\\Laravel\\Facade",
                     },
                     "providers": [
                         "Clockwork\\Support\\Laravel\\ClockworkServiceProvider"

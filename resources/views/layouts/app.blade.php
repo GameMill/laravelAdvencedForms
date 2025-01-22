@@ -31,6 +31,7 @@
                     </div>
                 </header>
             @endif
+            <x-breadcrumbs />
 
             <!-- Page Content -->
             <main>

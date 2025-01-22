@@ -9,8 +9,6 @@ use CBSoftwareDev\Form\Input\TextInput;
 use CBSoftwareDev\Form\Input\Textarea;
 use Illuminate\Http\Request;
 
-use function Laravel\Prompts\textarea;
-
 class Project_Catagories extends Controller
 {
     /**
@@ -18,7 +16,7 @@ class Project_Catagories extends Controller
      */
     public function index()
     {
-        return view("categories",[ 'categories' => clock(catagory::all())]); 
+        return view("tabel",[ 'categories' => clock(catagory::all())]); 
     }
 
     /**
@@ -34,7 +32,6 @@ class Project_Catagories extends Controller
         return Form::make([
             TextInput::make('name')->required()->length(3, 255),
             Textarea::make('description')->length(0, 500),
-            Select::make(name: 'parent_id')->options(options: catagory::all(columns: ["id","name"])->pluck("name","id")),
         ],$catagoryModel)->setModelClass(catagory::class)->columns(1);
     }
 
