@@ -6,16 +6,21 @@ class Column {
 
     private bool $sortable = false;
     
-    public static function make(string $name, string $label): self
+    public static function make(string $name, string $label): static
     {
-        return new self($name, $label);
+        return new static($name, $label);
     }
 
-    public function __construct(private string $name, private string $label) {
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function __construct(protected string $name, protected string $label) {
         
     }
 
-    public function sortable(): self
+    public function sortable(): static
     {
         $this->sortable = true;
         return $this;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\CBSoftwareDev\Breadcrumbs\View\Components;
+namespace App\CBSoftwareDev\Breadcrumbs\Components;
 
 use App\CBSoftwareDev\Breadcrumbs\BreadcrumbsGenerator;
 use Closure;

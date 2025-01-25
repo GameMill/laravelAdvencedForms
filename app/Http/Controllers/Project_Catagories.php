@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\CBSoftwareDev\Table\Table;
 use App\Models\catagory;
 use CBSoftwareDev\Form\Form;
 use CBSoftwareDev\Form\Input\Select;
 use CBSoftwareDev\Form\Input\TextInput;
 use CBSoftwareDev\Form\Input\Textarea;
+use CBSoftwareDev\Table\Columns\TextColumn;
 use Illuminate\Http\Request;
 
 class Project_Catagories extends Controller
@@ -16,7 +18,14 @@ class Project_Catagories extends Controller
      */
     public function index()
     {
-        return view("tabel",[ 'categories' => clock(catagory::all())]); 
+        $data = catagory::all();
+        return view("table",
+        [
+            'table' => table::make([
+                TextColumn::make('name','Name'),
+                TextColumn::make('description','Description'),
+            ])->setData($data)->paginate(10)
+        ]); 
     }
 
     /**

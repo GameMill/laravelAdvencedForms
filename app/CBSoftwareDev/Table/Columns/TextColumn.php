@@ -1,18 +1,14 @@
 <?php
 namespace CBSoftwareDev\Table\Columns;
 
+use App\CBSoftwareDev\Table\Table;
+
 class TextColumn extends Column {
-    public function __construct(private string $name, private string $value) {
-        
-    }
 
-    public function getName(): string
-    {
-        return $this->name;
-    }
 
-    public function getValue(): string
+
+    public function getValue(Table $table, int $nRow): string
     {
-        return $this->value;
+        return $table->getData()[$nRow][$this->name];
     }
 }

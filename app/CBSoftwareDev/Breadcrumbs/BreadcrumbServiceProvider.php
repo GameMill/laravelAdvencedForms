@@ -28,8 +28,8 @@ class BreadcrumbServiceProvider extends ServiceProvider implements DeferrablePro
      */
     public function boot(): void
     {
-        Blade::component('breadcrumbs', \App\CBSoftwareDev\Breadcrumbs\View\Components\BreadcrumbsComponent::class);
-        $this->loadViewsFrom(__DIR__ . '/View/', 'breadcrumbs');
+        Blade::component('breadcrumbs', \App\CBSoftwareDev\Breadcrumbs\Components\BreadcrumbsComponent::class);
+        $this->loadViewsFrom(__DIR__ . '/Views/', 'breadcrumbs');
 
     }
 }
